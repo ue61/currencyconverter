@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script>
+    function validate(evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode( key );
+        var regex = /[0-9]|\./;
+        if( !regex.test(key) ) {
+            theEvent.returnValue = false;
+            if(theEvent.preventDefault) theEvent.preventDefault();
+        }
+    }
+</script>
+<body>
+<a href="/">Обратно на домашнюю страницу</a>
+<a href="/history">История конвертаций</a>
+<form action = "/toconvert">
+<select name = "vn1">
+    <option th:value = "${first.getValutename()}" th:text="${first.getChar_code() + ' (' + first.getValutename() + ')'}"></option>
+    <option th:each="name : ${names}" th:value="${name.getValutename()}" th:text="${name.getChar_code() + ' (' + name.getValutename() + ')'}"></option>
+</select>
+<br>
+    <input type='text' onkeypress='validate(event)' name = "num" th:placeholder="${number}"/>
+<br>
+<br>
+<select name = "vn2">
+    <option th:value = "${second.getValutename()}" th:text="${second.getChar_code() + ' (' + second.getValutename() + ')'}"></option>
+    <option th:each="name : ${names}" th:value="${name.getValutename()}" th:text="${name.getChar_code() + ' (' + name.getValutename() + ')'}"></option>
+</select>
+<br>
+    <div><input type="submit" value="Конвертировать"/></div>
+<p>Converted: </p>
+    <a th:text="${answer}">answer</a>
+</form>
+</body>
+</html>

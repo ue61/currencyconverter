@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href = "/converter">Конвертация валют</a>
+<a href = "/">На главную страницу</a>
+<form action="/filteredHistory" method="get">
+    <h1 align="center">История</h1>
+        <select name="dateStr" class="select">
+            <option  value = "" text=""></option>
+            <option th:each="filter : ${filters}" th:value="${filter.getDate()}" th:text="${filter.getDate()}"></option>
+        </select>
+        <select name="out_valute" class="select">
+            <option  value="" text=""></option>
+            <option th:each="filter : ${filters}" th:value="${filter.getOutValute()}" th:text="${filter.getOutValute()}"></option>
+        </select>
+        <select name="in_valute" class="select">
+            <option  value="" text=""></option>
+            <option th:each="filter : ${filters}" th:value="${filter.getInValute()}" th:text="${filter.getInValute()}"></option>
+        </select>
+        <input type="submit" value="Применить фильтр"/>
+        <table>
+            <thead >
+            <tr >
+                <td><b> Исходная валюта</b></td>
+                <td><b> Целевая валюта</b> </td>
+                <td><b> Исходная сумма</b> </td>
+                <td><b> Курс</b> </td>
+                <td><b> Получаемая сумма</b> </td>
+                <td><b> Дата </b> </td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="filter : ${filtered}" >
+
+                <td width="20px" th:text="${filter.getOutValute()}">
+                </td><td th:text="${filter.getInValute()}">
+            </td><td th:text="${filter.getOutValue()}">
+            </td><td th:text="${filter.getCurrency()}">
+            </td><td th:text="${filter.getInValue()}">
+            </td><td th:text="${filter.getDate()}">
+            </td></tr>
+            </tbody>
+        </table>
+</form>
+</body>
+</html>
